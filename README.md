@@ -1,5 +1,2 @@
-#README.md
-README.md
-README.md
+# Serilog loggion to (R)ELK  example
 
-https://github.com/v4rt/SerilogRelk/edit/master/README.md
