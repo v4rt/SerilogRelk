@@ -1,0 +1,28 @@
+version: '3.3'
+services:
+  elk:
+    build: elk/
+    ports:
+      - "5601:5601"
+      - "9200:9200"
+      - "5044:5044"
+    volumes:
+      - ./elastic/elasticsearch.yml:/etc/elasticsearch/elasticsearch.yml    
+      - ./elastic/data:/usr/share/elasticsearch/data
+      - ./logstash/pipeline:/etc/logstash/conf.d/
+      - ./kibana.yml:/opt/kibana/config/kibana.yml
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: "rabbitmq"
+    environment:
+#      RABBITMQ_DEFAULT_USER: "guest"
+#      RABBITMQ_DEFAULT_PASS: "guest"
+      RABBITMQ_DEFAULT_VHOST: "/"
+    volumes:
+       - ./rabbitmq/mnesia:/var/lib/rabbitmq/mnesia
+       - ./rabbitmq/config/rabbitmq.config:/etc/rabbitmq/rabbitmq.config 
+       - ./rabbitmq/config/custom_definitions.json:/etc/rabbitmq/custom_definitions.json
+    ports:
+      - "15672:15672"
+      - "5672:5672"
